@@ -3,6 +3,8 @@ const Log = require("./logger");
 
 const app = express();
 
+app.use(express.json());
+
 app.get("/health", async (req, res) => {
 
   await Log(
@@ -14,6 +16,37 @@ app.get("/health", async (req, res) => {
 
   res.json({
     status: "ok"
+  });
+
+});
+
+app.get("/error", async (req, res) => {
+
+  await Log(
+    "backend",
+    "error",
+    "handler",
+    "test error route called"
+  );
+
+  res.status(500).json({
+    message: "something went wrong"
+  });
+
+});
+
+app.post("/users", async (req, res) => {
+
+  await Log(
+    "backend",
+    "info",
+    "controller",
+    "create user request"
+  );
+
+  res.json({
+    success: true,
+    user: req.body
   });
 
 });
